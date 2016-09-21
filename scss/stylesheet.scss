@@ -1,22 +1,4 @@
-@import 'bourbon';
-@import 'neat';
-
-* {
-  background-color: blue;
-}
-
-// .text {
-//   color: tint(blue, 50%);
-// }
-
-
-
-.container {
-  @include outer-container;
-
-  .container__inner {
-    @include span-columns(8);
-    @include shift(2);
-    color: white;
-  }
-}
+@import './layout.scss';
+@import './headerBar.scss';
+@import './_normalize.scss';
+@import './refillsTest.scss';

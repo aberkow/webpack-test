@@ -1,5 +1,5 @@
 const path = require('path');
-const package = require('./package.json');
+//const package = require('./package.json');
 //takes require from './js/fromStylesheet.js' sends it through webpack loaders and outputs a native css file...
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
@@ -39,9 +39,10 @@ module.exports = {
           presets: ['es2015']
         }
       },
+      //loader name convention short names = name-loader
       {
         test: /\.scss$/,
-        loader: ExtractTextPlugin.extract('style-loader', 'css-loader!sass-loader?includePaths[]=' + bourbon + '&includePaths[]=' + neat)
+        loader: ExtractTextPlugin.extract('style', 'css!sass?includePaths[]=' + bourbon + '&includePaths[]=' + neat)
       }
     ]
   },
