@@ -1,6 +1,10 @@
 @import 'bourbon';
 @import 'neat';
 
+$phone: 'min-width: 375px';
+$tablet: 'min-width: 768px';
+$desktop: 'min-width: 1024px';
+
 * {
   background-color: lightgrey;
 }
@@ -18,5 +22,39 @@
     @include span-columns(8);
     @include shift(2);
     color: shade(darkgrey, 75%);
+  }
+}
+
+.left-right-wrapper {
+  @include outer-container;
+}
+
+.left__container {
+  @include span-columns(10);
+  @include shift(1);
+  text-align: center;
+  .left__text {
+    font-size: 1.5rem;
+  }
+  &:hover {
+    color: red;
+  }
+  @media screen and ($tablet) {
+    @include span-columns(4);
+    @include shift(0);
+    position: absolute;
+  }
+}
+
+.right__container {
+  @include span-columns(10);
+  @include shift(1);
+  .right__text {
+    font-size: 1rem;
+  }
+  @media screen and ($tablet) {
+    @include span-columns(8);
+    @include shift(0);
+    //position: relative;
   }
 }

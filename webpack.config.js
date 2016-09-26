@@ -2,6 +2,8 @@ const path = require('path');
 //const package = require('./package.json');
 //takes require from './js/fromStylesheet.js' sends it through webpack loaders and outputs a native css file...
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+// separate a monolithic stylesheets into different stylesheets...
+const ExtractCssBlockPlugin = require('extract-css-block-webpack-plugin');
 
 //includePaths is an array
 const bourbon = require('node-bourbon').includePaths;
@@ -15,7 +17,7 @@ console.log(bourbon, neatFullPaths, 'from webpack');
 
 const webpack = require('webpack');
 
-module.exports = {
+ const config = {
   //test multiple entry points
   entry: {
     index: path.resolve(__dirname, './js/index.js'),
@@ -42,15 +44,27 @@ module.exports = {
       //loader name convention short names = name-loader
       {
         test: /\.scss$/,
-        loader: ExtractTextPlugin.extract('style', 'css!sass?includePaths[]=' + bourbon + '&includePaths[]=' + neat)
+        loader: ExtractTextPlugin.extract('style?sourceMap', 'css?sourceMap!sass?includePaths[]=' + bourbon + '&includePaths[]=' + neat)
+      },
+      {
+        test: "critical.css",
+        loader: "style!css"
       }
     ]
   },
   plugins: [
-    new ExtractTextPlugin('[name].css')
+    new ExtractTextPlugin('[name].css'),
+    //the ExtractCssBlockPlugin must come after the ExtractTextPlugin to work correctly.
+    new ExtractCssBlockPlugin()
   ],
   resolve: {
     moduleDirectories: ['node_modules'],
     extensions: ['', '.json', '.js', '.jsx']
   }
 };
+
+console.log(config.resolve, 'from resolve');
+
+//console.log(config.module.loaders[1].loader, 'from config devtool');
+
+module.exports = config;
